@@ -1,0 +1,9 @@
+#!/bin/bash
+set -e
+
+echo "=== ENSURE STORAGE DIRECTORY EXISTS AND HAS CORRECT PERMISSIONS ==="
+mkdir -p storage
+chown -R root:root storage
+
+echo "=== STARTING DATABASE INIT SCRIPT ==="
+database-init

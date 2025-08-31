@@ -1,37 +1,58 @@
-# See https://docs.docker.com/engine/reference/builder/#dockerignore-file for more about ignoring files.
+# Git
+.git
+.gitignore
+.gitattributes
 
-# Ignore git directory.
-/.git/
+# Docker
+Dockerfile*
+docker-compose*
+.dockerignore
 
-# Ignore bundler config.
-/.bundle
+# Logs
+log/*
+*.log
 
-# Ignore all environment files (except templates).
-/.env*
-!/.env*.erb
+# Runtime data
+tmp/*
+!tmp/.gitkeep
 
-# Ignore all default key files.
-/config/master.key
-/config/credentials/*.key
+# Database
+db/*.sqlite3
+db/*.sqlite3-*
 
-# Ignore all logfiles and tempfiles.
-/log/*
-/tmp/*
-!/log/.keep
-!/tmp/.keep
+# Dependencies
+vendor/bundle
+node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# Ignore pidfiles, but keep the directory.
-/tmp/pids/*
-!/tmp/pids/.keep
+# Assets
+public/assets
+public/packs
+public/packs-test
 
-# Ignore storage (uploaded files in development and any SQLite databases).
-/storage/*
-!/storage/.keep
-/tmp/storage/*
-!/tmp/storage/.keep
+# Environment variables
+.env
+.env.*
 
-# Ignore assets.
-/node_modules/
-/app/assets/builds/*
-!/app/assets/builds/.keep
-/public/assets
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Coverage reports
+coverage/
+
+# Documentation
+README.md
+docs/
+
+# Test files
+test/
+spec/

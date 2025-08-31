@@ -1,0 +1,54 @@
+version: "3"
+
+services:
+  rails:
+    build:
+      dockerfile: docker/development/Dockerfile
+      context: .
+    image: rails-boilerplate
+    container_name: rails-boilerplate
+    env_file: .env
+    stdin_open: true
+    tty: true
+    volumes:
+      - .:/project
+      - bundle_data:/bundle
+      - $HOME/.ssh:/project/docker/development/home/.ssh
+    healthcheck:
+      test: wget --no-verbose --tries=1 --spider http://0.0.0.0:3000/health || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 1m
+    ports:
+      - 3000:3000
+    depends_on:
+      - postgres
+    extra_hosts:
+      - local.localhost:host-gateway
+    networks:
+      default:
+      rails-boilerplate-network:
+        aliases:
+          - rails-boilerplate-rails
+
+  postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+    # ports:
+    #   - 5432:5432
+    expose:
+      - 5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  bundle_data:
+  postgres_data:
+  redis_data:
+
+networks:
+  rails-boilerplate-network:
+    name: rails-boilerplate-network

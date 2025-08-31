@@ -1,0 +1,19 @@
+#!/bin/sh
+set -e
+
+echo "=== ENSURE STORAGE DIRECTORY EXISTS AND HAS CORRECT PERMISSIONS ==="
+mkdir -p storage
+chown -R root:root storage
+
+echo "=== STARTING DATABASE INIT SCRIPT ==="
+rails db:create db:schema:load
+
+echo "=== APPLYING LATEST MIGRATIONS ==="
+rails db:migrate
+
+echo "=== CLEANING OLD DEPENDENCIES, ASSETS AND LOGS ==="
+bundle clean
+rails assets:clean log:clear tmp:clear
+
+echo "=== STARTING WEB SERVER ==="
+puma

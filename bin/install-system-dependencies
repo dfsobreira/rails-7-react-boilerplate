@@ -1,0 +1,47 @@
+#!/bin/sh
+set -e
+
+echo "=== INSTALLING SYSTEM DEPENDENCIES ==="
+
+# Update package list
+apk update
+
+# Install essential packages
+apk add --no-cache \
+    build-base \
+    git \
+    postgresql-dev \
+    postgresql-client \
+    nodejs \
+    npm \
+    yarn \
+    tzdata \
+    bash \
+    curl \
+    wget \
+    sudo \
+    shadow \
+    zsh \
+    vim \
+    less \
+    man-pages
+
+# Install additional development tools
+apk add --no-cache \
+    libffi-dev \
+    openssl-dev \
+    readline-dev \
+    zlib-dev \
+    linux-headers
+
+# Create dfsobreira user if it doesn't exist
+if ! id "dfsobreira" >/dev/null 2>&1; then
+    echo "=== CREATING USER dfsobreira ==="
+    adduser -D -s /bin/zsh dfsobreira
+    echo "dfsobreira ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+fi
+
+# Install yarn globally
+npm install -g yarn
+
+echo "=== SYSTEM DEPENDENCIES INSTALLED ==="
