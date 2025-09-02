@@ -3,7 +3,6 @@
 
 import { Application } from "@hotwired/stimulus";
 
-// Import controllers manually since esbuild doesn't support import.meta.glob
 import TestController from "./test_controller";
 import HelloController from "./hello_controller";
 
@@ -11,7 +10,6 @@ const application = Application.start();
 application.debug = false;
 window.Stimulus = application;
 
-// Register controllers manually
 application.register("test", TestController);
 application.register("hello", HelloController);
 

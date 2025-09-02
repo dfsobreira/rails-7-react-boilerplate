@@ -1,24 +1,29 @@
-# README
+# Rails Boilerplate
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Welcome to this Rails boilerplate with React, Stimulus, and Tailwind CSS.
 
-Things you may want to cover:
+## Setup
 
-* Ruby version
+**1. Create environment file:**
 
-* System dependencies
+```bash
+cp .env.example .env
+# Edit .env with your database credentials
+```
 
-* Configuration
+**2. Start with Docker:**
 
-* Database creation
+```bash
+docker-compose up --build
+# App will be available at http://localhost:3000
+```
 
-* Database initialization
+## Project Structure
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```
+app/javascript/
+├── application.js          # Main entry point
+├── components/             # React components
+├── controllers/            # Stimulus controllers
+└── helpers/                # JavaScript helpers
+```
