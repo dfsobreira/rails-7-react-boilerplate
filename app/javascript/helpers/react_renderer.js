@@ -59,13 +59,6 @@ export const autoRenderComponents = () => {
     const componentName = element.dataset.reactComponent;
     const dataAttribute = element.dataset.reactData || "reactData";
 
-    console.log(
-      "Rendering component:",
-      componentName,
-      "in element:",
-      element.id
-    );
-
     if (componentName) {
       renderComponentWithData(componentName, element.id, dataAttribute);
     }
@@ -75,7 +68,6 @@ export const autoRenderComponents = () => {
 // Initialize React rendering when DOM is ready
 export const initializeReactRenderer = () => {
   document.addEventListener("DOMContentLoaded", function () {
-    console.log("DOM loaded, initializing React renderer");
     // Auto-render components with data-react-component attribute
     autoRenderComponents();
   });
