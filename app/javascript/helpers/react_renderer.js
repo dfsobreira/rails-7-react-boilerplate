@@ -51,29 +51,26 @@ export const renderComponentWithData = (
   renderReactComponent(componentName, container, data);
 };
 
-// Auto-render components marked with data-react-component
-export const autoRenderComponents = () => {
-  const components = document.querySelectorAll("[data-react-component]");
-
-  components.forEach((element) => {
-    const componentName = element.dataset.reactComponent;
-    const dataAttribute = element.dataset.reactData || "reactData";
-
-    if (componentName) {
-      renderComponentWithData(componentName, element.id, dataAttribute);
-    }
-  });
-};
-
 // Initialize React rendering when DOM is ready
 export const initializeReactRenderer = () => {
   document.addEventListener("DOMContentLoaded", function () {
-    // Auto-render components with data-react-component attribute
-    autoRenderComponents();
+    const callback = () => {
+      const mountPoints = document.querySelectorAll(
+        "[data-react-component]:not([data-react-rendered])"
+      );
+      mountPoints.forEach((mountPoint) => {
+        const componentName = mountPoint.dataset.reactComponent;
+        const componentId = mountPoint.id;
+        const props = mountPoint.dataset.reactData || "ReactData";
+        renderComponentWithData(componentName, componentId, props);
+        mountPoint.dataset.reactRendered = "true";
+      });
+    };
+    const observer = new MutationObserver(callback);
+    observer.observe(document, { childList: true, subtree: true });
   });
 };
 
 // Make functions globally available for manual use
 window.renderReactComponent = renderReactComponent;
 window.renderComponentWithData = renderComponentWithData;
-window.autoRenderComponents = autoRenderComponents;

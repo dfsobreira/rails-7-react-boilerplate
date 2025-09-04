@@ -4,7 +4,6 @@
 export {
   renderReactComponent,
   renderComponentWithData,
-  autoRenderComponents,
   initializeReactRenderer,
 } from "./react_renderer";
 
