@@ -51,22 +51,24 @@ export const renderComponentWithData = (
   renderReactComponent(componentName, container, data);
 };
 
+export const mountComponent = () => {
+  const mountPoints = document.querySelectorAll(
+    "[data-react-component]:not([data-react-rendered])"
+  );
+  mountPoints.forEach((mountPoint) => {
+    const componentName = mountPoint.dataset.reactComponent;
+    const componentId = mountPoint.id;
+    const props = mountPoint.dataset.reactData || "ReactData";
+    renderComponentWithData(componentName, componentId, props);
+    mountPoint.dataset.reactRendered = "true";
+  });
+};
+
 // Initialize React rendering when DOM is ready
 export const initializeReactRenderer = () => {
-  document.addEventListener("DOMContentLoaded", function () {
-    const callback = () => {
-      const mountPoints = document.querySelectorAll(
-        "[data-react-component]:not([data-react-rendered])"
-      );
-      mountPoints.forEach((mountPoint) => {
-        const componentName = mountPoint.dataset.reactComponent;
-        const componentId = mountPoint.id;
-        const props = mountPoint.dataset.reactData || "ReactData";
-        renderComponentWithData(componentName, componentId, props);
-        mountPoint.dataset.reactRendered = "true";
-      });
-    };
-    const observer = new MutationObserver(callback);
+  mountComponent();
+  document.addEventListener("DOMContentLoaded", () => {
+    const observer = new MutationObserver(mountComponent);
     observer.observe(document, { childList: true, subtree: true });
   });
 };
